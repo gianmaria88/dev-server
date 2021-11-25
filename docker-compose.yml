@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www/html
+      - .:/opt/project
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - ./php-additional.ini:/usr/local/etc/php/conf.d/php-additional.ini
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+      - DOCUMENT_ROOT=/var/www/html/public
+      - SS_TRUSTED_PROXY_IPS=*
+      - SS_ENVIRONMENT_TYPE=dev
+      - SS_DATABASE_SERVER=db
+      - SS_DATABASE_NAME=SS_mysite
+      - SS_DATABASE_USERNAME=root
+      - SS_DATABASE_PASSWORD=
+      - SS_DEFAULT_ADMIN_USERNAME=admin
+      - SS_DEFAULT_ADMIN_PASSWORD=password
+      - SS_ERROR_LOG = "silverstripe.log"
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 63306:3306
+volumes:
+  db-data:
