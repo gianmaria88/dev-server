@@ -22,7 +22,7 @@ services:
       - SS_DATABASE_PASSWORD=
       - SS_DEFAULT_ADMIN_USERNAME=admin
       - SS_DEFAULT_ADMIN_PASSWORD=password
-      - SS_ERROR_LOG = "silverstripe.log"
+      - SS_ERROR_LOG="error.log"
   db:
     image: mysql:5.7
     environment:
